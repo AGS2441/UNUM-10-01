@@ -11,7 +11,7 @@ namespace UNUMSelfPwdReset
             _config = config;
         }
         #region Service for Append the USer Values 
-        public async Task<List<UserLoginClient>> GetUserLogins(string userId, string Username, DateTime? pwdChangedOn,string lanID,string sss)
+        public async Task<List<UserLoginClient>> GetUserLogins(string userId, string Username, DateTime? pwdChangedOn, string lanID, string sss)
         {
             string days = _config.GetValue<string>("Localinstants:days");
             List<UserLoginClient> loginClients = new List<UserLoginClient>() {

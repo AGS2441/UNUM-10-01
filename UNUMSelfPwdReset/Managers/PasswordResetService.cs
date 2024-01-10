@@ -34,7 +34,7 @@ namespace UNUMSelfPwdReset.Managers
             }
             catch (ServiceException ex)
             {
-                
+
                 return ex.Message;
 
             }
@@ -42,11 +42,11 @@ namespace UNUMSelfPwdReset.Managers
         #endregion
 
         #region Service For Admin token
-        private GraphServiceClient GetAdminGraphServiceClient( string AdminToken)
+        private GraphServiceClient GetAdminGraphServiceClient(string AdminToken)
         {
             string graphEndpoint = "https://graph.microsoft.com/v1.0";
             var graphClient = new GraphServiceClient(graphEndpoint, new DelegateAuthenticationProvider(async request =>
-            { 
+            {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AdminToken);
             }));
 

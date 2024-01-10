@@ -50,7 +50,7 @@ namespace UNUMSelfPwdReset.Controllers
         {
 
             var me = await _graphServiceClient.Me.Request().GetAsync();
-            
+
             string accessToken = await _azureAdminActionManager.GetAdminTokenForGraph();
             var userInfo = CopyHandler.UserProperty(me);
             try
@@ -58,7 +58,7 @@ namespace UNUMSelfPwdReset.Controllers
                 var Error = " User details by Admin";
                 var user = await _graphServiceClient.Users[me.UserPrincipalName]
                    .Request()
-                   .Select(x => new   { x.LastPasswordChangeDateTime,x.OnPremisesSamAccountName,x.PasswordProfile})
+                   .Select(x => new { x.LastPasswordChangeDateTime, x.OnPremisesSamAccountName, x.PasswordProfile })
                    .GetAsync();
 
                 userInfo.LastPasswordChangeDateTime = user?.LastPasswordChangeDateTime?.DateTime;
@@ -67,18 +67,19 @@ namespace UNUMSelfPwdReset.Controllers
                 #region to get User Last Login date time
                 Error = "call graph api for signInActivity";
                 string lastSignInDateTime = user?.LastPasswordChangeDateTime?.DateTime.ToString();
-                try{
+                try
+                {
                     dynamic result = await CallGraphApi(accessToken, me.Id);
                     LastLoginViewModel model = new LastLoginViewModel();
                     Error = "Deserialize the signInActivity model";
                     if (result != null)
                     {
                         model = JsonSerializer.Deserialize<LastLoginViewModel>(result);
-                        if (model.signInActivity!=null && model.signInActivity.lastSignInDateTime!=null)
+                        if (model.signInActivity != null && model.signInActivity.lastSignInDateTime != null)
                         {
                             lastSignInDateTime = model.signInActivity.lastSignInDateTime;
                         }
-                         
+
                     }
                 }
                 catch (Exception ex)
@@ -91,7 +92,7 @@ namespace UNUMSelfPwdReset.Controllers
                 //DateTime localDateTime = univDateTime.ToLocalTime();
                 #endregion
                 Error = "call login clients send the values";
-                userInfo.LoginClients = await _loginsManager.GetUserLogins(userInfo?.Id, userInfo?.UserPrincipalName, Convert.ToDateTime(userInfo?.LastPasswordChangeDateTime), user?.OnPremisesSamAccountName , lastSignInDateTime);
+                userInfo.LoginClients = await _loginsManager.GetUserLogins(userInfo?.Id, userInfo?.UserPrincipalName, Convert.ToDateTime(userInfo?.LastPasswordChangeDateTime), user?.OnPremisesSamAccountName, lastSignInDateTime);
                 string strProfilePicBase64 = "";
                 try
                 {
@@ -116,20 +117,20 @@ namespace UNUMSelfPwdReset.Controllers
                 {
                     HttpContext.Session.SetString("LastName", userInfo.Surname?.ToString());
                 }
-                if (user.PasswordProfile!=null)
+                if (user.PasswordProfile != null)
                 {
-                    if (user.PasswordProfile.ForceChangePasswordNextSignIn==true)
+                    if (user.PasswordProfile.ForceChangePasswordNextSignIn == true)
                     {
-                        userInfo.LoginClients[0].ExpireInDays=0;
+                        userInfo.LoginClients[0].ExpireInDays = 0;
                     }
                 }
                 int? days = userInfo.LoginClients[0].ExpireInDays;
-               // return View(userInfo);
+                // return View(userInfo);
             }
             catch (Exception ex)
             {
 
-                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", ex.Message +"--"+ Error));
+                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", ex.Message + "--" + Error));
             }
             return View(userInfo);
         }
@@ -155,23 +156,25 @@ namespace UNUMSelfPwdReset.Controllers
                 model.TempPassword = tempPassword;
 
                 Error = " Reset Password";
-            var response = await _passwordResetService.ResetUserPasswordAsync(token, temp);
-                 //    var response = "true";
+                var response = await _passwordResetService.ResetUserPasswordAsync(token, temp);
+                //    var response = "true";
                 if (response == "true")
                 {
 
                     // TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", "Password Changed Successfully !"));
-                    return View (model);
+                    return View(model);
                 }
                 else
-                { 
+                {
                     TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", response + " After Reset Password Method "));
                     return RedirectToAction("Index");
                 }
 
-                
-            }catch(Exception ex) {
-                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home",ex.Message + Error));
+
+            }
+            catch (Exception ex)
+            {
+                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", ex.Message + Error));
                 return RedirectToAction("Index");
             }
         }
@@ -200,7 +203,7 @@ namespace UNUMSelfPwdReset.Controllers
             String generatedPassword = "";
             try
             {
-               
+
                 if (length < 4)
                     throw new Exception("Number of characters should be greater than 4.");
                 int lowerpass, upperpass, numpass, specialchar;
@@ -226,7 +229,8 @@ namespace UNUMSelfPwdReset.Controllers
                     else
                         generatedPassword += getRandomChar(allChars);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
                 throw new Exception(ex.Message);
@@ -250,7 +254,7 @@ namespace UNUMSelfPwdReset.Controllers
         #endregion
 
         #region call graph API for Last Login Date time
-        public async Task<string> CallGraphApi(string accessToken,string UserId)
+        public async Task<string> CallGraphApi(string accessToken, string UserId)
         {
             try
             {
@@ -277,9 +281,10 @@ namespace UNUMSelfPwdReset.Controllers
                         return null;
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", ex.Message ));
+                TempData.SetObjectAsJson("PopupViewModel", StaticMethods.CreatePopupModel("Home", ex.Message));
                 return null;
             }
         }

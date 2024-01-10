@@ -7,9 +7,9 @@
         <div class="modal-dialog @Model.Dialog">
             <div class="modal-content">
                 @*<div class="modal-header r-t @Model.CssClassHeader " style="border-bottom:none">
-                    <h4 class="modal-title">@Model.Header</h4>
+                <h4 class="modal-title">@Model.Header</h4>
                 </div>*@
-                <div class="modal-body"style="text-align:center;">
+                <div class="modal-body" style="text-align:center;">
                     <label style="font-size:16px;font-weight:normal;display: inline-block;word-break: break-all;"> @Model.Message</label>
                     @if (Model.MessageItems != null && Model.MessageItems.Count() > 0)
                     {
@@ -39,7 +39,7 @@
 
 <script type="text/javascript">
 
-    setTimeout(function () {        
+    setTimeout(function () {
         $("#_PopupNotificationView").hide();
     }, 10000);
 

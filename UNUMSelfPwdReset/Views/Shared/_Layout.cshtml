@@ -48,10 +48,10 @@
     <div id="global-loader">
         @*<img src="~/assets/images/loader.svg" class="loader-img" alt="Loader">*@
         <div class="load-blur"></div>
-        <div class="text-center text-white Load-d" >
+        <div class="text-center text-white Load-d">
             <p class="m-n Load-P">
-                <i  class="fa-solid fa-spinner f-26 text-x rotate mr-2" style="color:#3d3d92"></i>
-               
+                <i class="fa-solid fa-spinner f-26 text-x rotate mr-2" style="color:#3d3d92"></i>
+
                 <span class="h6 font-thin semi-bold">Loading...</span>
             </p>
         </div>
@@ -59,73 +59,73 @@
     <!-- /GLOBAL-LOADER -->
     <!-- PAGE -->
     <!-- app-Header -->
-    
-        <div class="app-header header sticky">
-            <div class="container-fluid main-container" style="min-height:24px;">
-                <div class="d-flex">
-                    <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
-                    <!-- sidebar-toggle-->
-                    <a class=" " asp-action="Index" asp-controller="Home">
-                        <img src="~/assets/img/brand/logo-1.png" class="header-brand-img desktop-logo" alt="logo">
-                        <img src="~/assets/img/brand/logo-1.png" class="header-brand-img light-logo1"
+
+    <div class="app-header header sticky">
+        <div class="container-fluid main-container" style="min-height:24px;">
+            <div class="d-flex">
+                <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
+                <!-- sidebar-toggle-->
+                <a class=" " asp-action="Index" asp-controller="Home">
+                    <img src="~/assets/img/brand/logo-1.png" class="header-brand-img desktop-logo" alt="logo">
+                    <img src="~/assets/img/brand/logo-1.png" class="header-brand-img light-logo1"
                          alt="logo">
-                    </a>
-                    <!-- LOGO -->
-
-
-
-                </div>
-            </div>
-        </div>
-   @if (User.Identity?.IsAuthenticated == true)
-    {
-    <!-- /app-Header -->
-    <!--APP-SIDEBAR-->
-    <div class="sticky">
-        <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
-        <div class="app-sidebar">
-            <div class="side-header">
-                <a class=" logo-horizontal" asp-action="Index" asp-controller="Home">
-                        <img src="~/assets/img/brand/logo-1.png" alt="logo" class="header-brand-img desktop-logo">
-                        
                 </a>
                 <!-- LOGO -->
+
+
+
             </div>
-            <div class="main-sidemenu">
-                <div class="pf-img mt-6 ml-3">
-                    <center class="p-i">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            @if (@Context.Session.GetString("Profilepic") != null && @Context.Session.GetString("Profilepic") != "")
+        </div>
+    </div>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <!-- /app-Header -->
+        <!--APP-SIDEBAR-->
+        <div class="sticky">
+            <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+            <div class="app-sidebar">
+                <div class="side-header">
+                    <a class=" logo-horizontal" asp-action="Index" asp-controller="Home">
+                        <img src="~/assets/img/brand/logo-1.png" alt="logo" class="header-brand-img desktop-logo">
+
+                    </a>
+                    <!-- LOGO -->
+                </div>
+                <div class="main-sidemenu">
+                    <div class="pf-img mt-6 ml-3">
+                        <center class="p-i">
+                            @if (User.Identity?.IsAuthenticated == true)
                             {
+                                @if (@Context.Session.GetString("Profilepic") != null && @Context.Session.GetString("Profilepic") != "")
+                                {
                                     <img src="data:image;base64,@Context.Session.GetString("Profilepic")" class="profile-img" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/images/user.png" class="profile-img" />
+
+                                }
                             }
                             else
                             {
-                                    <img src="~/assets/images/user.png" class="profile-img" />
-
+                                <img src="~/assets/images/user.png" style="height:150px;border-radius:50%;" />
                             }
-                        }
-                        else
-                        {
-                            <img src="~/assets/images/user.png" style="height:150px;border-radius:50%;" />
-                        }
-                    </center>
-                </div>
-                <div class="slide-left disabled" id="slide-left">
-                    <svg xmlns="http://www.w3.org/2000/svg"
+                        </center>
+                    </div>
+                    <div class="slide-left disabled" id="slide-left">
+                        <svg xmlns="http://www.w3.org/2000/svg"
                          fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
-                    </svg>
-                </div>
-                <ul class="side-menu">
-                    <li class="sub-category text-center">
-                        <h3 class="p-text">@Context.Session.GetString("FirstName") @Context.Session.GetString("LastName")</h3>
-                    </li>
-                </ul>
+                            <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
+                        </svg>
+                    </div>
+                    <ul class="side-menu">
+                        <li class="sub-category text-center">
+                            <h3 class="p-text">@Context.Session.GetString("FirstName") @Context.Session.GetString("LastName")</h3>
+                        </li>
+                    </ul>
 
+                </div>
             </div>
-        </div>
         </div>
     }
     <!--/APP-SIDEBAR-->
@@ -223,20 +223,20 @@
                     <div class="alert alert-warning mt-3">
                         <div class="col-md-12 text-left" style="display: inline-flex;">
                             <div class="ts float-start" style="margin-top: 5px;">
-                            <svg class="svg-warning mr-i" xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 0 24 24" width="2.5rem" fill="#eb6d00">
-                                <path d="M0 0h24v24H0z" fill="none">
+                                <svg class="svg-warning mr-i" xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 0 24 24" width="2.5rem" fill="#eb6d00">
+                                    <path d="M0 0h24v24H0z" fill="none">
 
-                                </path>
-                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z">
+                                    </path>
+                                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z">
 
-                                </path>
-                            </svg>
+                                    </path>
+                                </svg>
                             </div>
                             <div class="m-s">
-                            <label class="fs-16 semi-bold">Reminder you may need to change your password in other applications such as your mobile app or authenticator. </label>
+                                <label class="fs-16 semi-bold">Reminder you may need to change your password in other applications such as your mobile app or authenticator. </label>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none;justify-content:flex-end;">
